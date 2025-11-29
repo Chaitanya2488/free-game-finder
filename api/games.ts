@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Construct the URL to forward the request to, including any query parameters
-  const { searchParams } = new URL(req.url, `http://${req.headers.host}`);
+  const { searchParams } = new URL(req.url || '/', `http://${req.headers.host}`);
   const targetUrl = `https://www.freetogame.com/api/games?${searchParams.toString()}`;
 
   try {
