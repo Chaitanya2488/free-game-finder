@@ -1,1 +1,156 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global Resets & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Define CSS Variables for Theming */
+:root {
+  /* Default Light Theme Variables */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f4f7f9;
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --accent-color: #3182ce; /* Blue accent */
+  --accent-hover: #2b6cb0;
+  --border-color: #e2e8f0;
+  --card-bg: #ffffff;
+  --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --button-bg: var(--accent-color);
+  --button-text: #ffffff;
+  --input-bg: #ffffff;
+  --input-border: #cbd5e0;
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+}
+
+/* Dark Theme Variables (Applied when body has .dark-theme class) */
+.dark-theme {
+  --bg-primary: #1a202c; /* Dark background */
+  --bg-secondary: #2d3748; /* Slightly lighter dark */
+  --text-primary: #e2e8f0; /* Light text */
+  --text-secondary: #a0aec0; /* Grayish text */
+  --accent-color: #63b3ed; /* Light blue accent */
+  --accent-hover: #4299e1;
+  --border-color: #4a5568;
+  --card-bg: #2d3748; /* Dark card background */
+  --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  --button-bg: var(--accent-color);
+  --button-text: #1a202c; /* Dark text on light blue button */
+  --input-bg: #4a5568;
+  --input-border: #718096;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth theme transition */
+}
+
+main.main-content {
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto; /* Center content */
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+/* Basic Button Styling */
+button, .play-button, .profile-button, .back-button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: inline-block; /* For anchor tags styled as buttons */
+  text-align: center;
+}
+
+button:hover, .play-button:hover, .profile-button:hover, .back-button:hover {
+  background-color: var(--accent-hover);
+}
+
+/* Basic Form Control Styling */
+select, input[type="text"] {
+    padding: 0.6rem;
+    border: 1px solid var(--input-border);
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+    border-radius: 4px;
+    min-width: 150px; /* Ensure select dropdowns have decent width */
+}
+
+label {
+  margin-right: 0.5rem;
+  font-weight: bold;
+  color: var(--text-secondary);
+}
+
+.control-group {
+    margin-bottom: 1rem; /* Space between control groups */
+    margin-right: 1.5rem; /* Space controls horizontally */
+    display: inline-block; /* Layout controls side-by-side */
+}
+
+.controls {
+    background-color: var(--bg-secondary);
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap; /* Allow controls to wrap on smaller screens */
+    align-items: center;
+}
+
+.search-bar input {
+    width: 250px; /* Specific width for search */
+}
+
+
+/* Utility Classes */
+.page-title {
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+  font-size: 2rem;
+  font-weight: 600;
+  border-bottom: 2px solid var(--accent-color);
+  display: inline-block;
+  padding-bottom: 0.3rem;
+}
+
+.error-message {
+  color: #e53e3e; /* Red for errors */
+  background-color: #fed7d7;
+  border: 1px solid #f56565;
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+
+.dark-theme .error-message {
+    background-color: #451111;
+    border-color: #e53e3e;
+    color: #fed7d7;
+}
+
+.loading-spinner { /* Style your LoaderComponent if needed */
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+}
+
+/* Style individual components in their respective CSS files */

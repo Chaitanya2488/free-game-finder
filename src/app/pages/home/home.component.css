@@ -1,0 +1,13 @@
+.home-container {
+  /* Container styling if needed */
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive grid */
+  gap: 1.5rem; /* Space between cards */
+  margin-top: 2rem;
+}
+
+/* Styles for filter/sort controls */
+/* Add more specific styles here */

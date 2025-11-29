@@ -1,0 +1,14 @@
+<!-- Add routerLink to navigate to detail page -->
+<a [routerLink]="['/game', game.id]" class="card-link">
+  <div class="game-card">
+    <img [src]="game.thumbnail" [alt]="game.title + ' thumbnail'" class="card-thumbnail" loading="lazy">
+    <div class="card-body">
+      <h3 class="card-title">{{ game.title }}</h3>
+      <p class="card-genre">{{ game.genre }}</p>
+      <span class="card-platform">{{ game.platform }}</span>
+      <!-- Optional: Add short description -->
+      <!-- <p class="card-description">{{ game.short_description }}</p> -->
+       <span class="free-badge">FREE</span>
+    </div>
+  </div>
+</a>

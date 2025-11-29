@@ -1,0 +1,74 @@
+.card-link {
+  display: block; /* Make the whole link clickable */
+  text-decoration: none;
+  color: inherit; /* Inherit text color */
+  border-radius: 8px;
+  overflow: hidden; /* Clip image corners */
+  background-color: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card-link:hover {
+  transform: translateY(-4px); /* Slight lift effect */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15), 0 6px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.dark-theme .card-link:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 12px 0 rgba(0, 0, 0, 0.3);
+}
+
+.game-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure cards in a grid have same height basis */
+}
+
+.card-thumbnail {
+  width: 100%;
+  height: 180px; /* Fixed height for thumbnails */
+  object-fit: cover; /* Crop images nicely */
+  display: block;
+}
+
+.card-body {
+  padding: 1rem;
+  flex-grow: 1; /* Allows body to fill remaining space */
+  position: relative; /* For positioning the badge */
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: var(--text-primary);
+}
+
+.card-genre {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.6rem;
+  text-transform: capitalize;
+}
+
+.card-platform {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  background-color: var(--bg-secondary);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  display: inline-block;
+  border: 1px solid var(--border-color);
+}
+
+.free-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: var(--accent-color);
+  color: var(--button-text);
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 4px;
+}

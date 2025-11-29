@@ -1,0 +1,4 @@
+<button (click)="toggleTheme()" class="theme-toggle-button" [title]="'Switch to ' + (themeService.currentTheme() === 'light' ? 'dark' : 'light') + ' mode'">
+  <span *ngIf="themeService.currentTheme() === 'dark'">☀️ Light</span>
+  <span *ngIf="themeService.currentTheme() === 'light'">🌙 Dark</span>
+</button>

@@ -1,0 +1,59 @@
+<div class="detail-container">
+  <!-- Back Button -->
+  <a routerLink="/" class="back-button">&larr; Back to List</a>
+
+  <!-- Loading Indicator -->
+  <app-loader *ngIf="isLoading()"></app-loader>
+
+  <!-- Error Message -->
+  <div *ngIf="error()" class="error-message">
+    {{ error() }}
+  </div>
+
+  <!-- Game Details Content -->
+  <div *ngIf="gameDetails() as game; else noGameFound">
+    <h1 class="game-title">{{ game.title }}</h1>
+    <div class="detail-header">
+      <img [src]="game.thumbnail" [alt]="game.title" class="detail-thumbnail">
+      <div class="header-info">
+         <p><strong>Genre:</strong> {{ game.genre }}</p>
+         <p><strong>Platform:</strong> {{ game.platform }}</p>
+         <p><strong>Publisher:</strong> {{ game.publisher }}</p>
+         <p><strong>Developer:</strong> {{ game.developer }}</p>
+         <p><strong>Release Date:</strong> {{ game.release_date | date:'longDate' }}</p>
+         <p><strong>Status:</strong> {{ game.status }}</p>
+         <a [href]="game.game_url" target="_blank" rel="noopener noreferrer" class="play-button">Play Now</a>
+         <a [href]="game.freetogame_profile_url" target="_blank" rel="noopener noreferrer" class="profile-button">View Profile</a>
+      </div>
+    </div>
+
+    <h2>Description</h2>
+    <!-- Use innerHTML carefully if description contains HTML, or sanitize it -->
+    <div class="description" [innerHTML]="game.description"></div>
+
+    <!-- Screenshots -->
+    <div *ngIf="game.screenshots && game.screenshots.length > 0">
+       <h2>Screenshots</h2>
+       <div class="screenshots-grid">
+          <img *ngFor="let screenshot of game.screenshots" [src]="screenshot.image" [alt]="game.title + ' screenshot ' + screenshot.id" loading="lazy">
+       </div>
+    </div>
+
+    <!-- Minimum System Requirements -->
+    <div *ngIf="game.minimum_system_requirements">
+        <h2>Minimum System Requirements ({{ game.platform }})</h2>
+        <ul class="requirements-list">
+            <li *ngIf="game.minimum_system_requirements.os"><strong>OS:</strong> {{ game.minimum_system_requirements.os }}</li>
+            <li *ngIf="game.minimum_system_requirements.processor"><strong>Processor:</strong> {{ game.minimum_system_requirements.processor }}</li>
+            <li *ngIf="game.minimum_system_requirements.memory"><strong>Memory:</strong> {{ game.minimum_system_requirements.memory }}</li>
+            <li *ngIf="game.minimum_system_requirements.graphics"><strong>Graphics:</strong> {{ game.minimum_system_requirements.graphics }}</li>
+            <li *ngIf="game.minimum_system_requirements.storage"><strong>Storage:</strong> {{ game.minimum_system_requirements.storage }}</li>
+        </ul>
+    </div>
+  </div>
+
+  <!-- Template shown if gameDetails is null and not loading/error -->
+  <ng-template #noGameFound>
+    <p *ngIf="!isLoading() && !error()">Game details could not be loaded.</p>
+  </ng-template>
+</div>

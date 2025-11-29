@@ -1,0 +1,51 @@
+<div class="home-container">
+  <h1 class="page-title">Discover Free-to-Play Games</h1>
+
+  <!-- Filter and Sort Controls -->
+  <div class="controls">
+    <div class="control-group">
+      <label for="genre-select">Genre:</label>
+      <select id="genre-select" (change)="onGenreChange($event)" [ngModel]="selectedGenre()">
+        <option value="">All Genres</option>
+        <option *ngFor="let genre of genres" [value]="genre">{{ genre | titlecase }}</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label for="sort-select">Sort By:</label>
+      <select id="sort-select" (change)="onSortChange($event)" [ngModel]="selectedSortBy()">
+        <option *ngFor="let sortOpt of sortOptions" [value]="sortOpt.value">{{ sortOpt.label }}</option>
+      </select>
+    </div>
+
+    <div class="control-group search-bar">
+       <label for="search-input">Search:</label>
+       <input
+         type="text"
+         id="search-input"
+         placeholder="Search by title or genre..."
+         [ngModel]="searchTerm()"
+         (input)="onSearchTermChange($event)"
+       />
+     </div>
+  </div>
+
+  <!-- Loading Indicator -->
+  <app-loader *ngIf="isLoading()"></app-loader>
+
+  <!-- Error Message -->
+  <div *ngIf="error()" class="error-message">
+    {{ error() }}
+  </div>
+
+  <!-- Game List -->
+  <div class="game-grid" *ngIf="!isLoading() && !error()">
+    <!-- Use the computed signal for display -->
+    <app-game-card *ngFor="let game of filteredGames(); trackBy: trackGameById" [game]="game"></app-game-card>
+
+    <!-- Message if no games match filters/search -->
+    <p *ngIf="filteredGames().length === 0 && !isLoading()">
+      No games found matching your criteria.
+    </p>
+  </div>
+</div>
