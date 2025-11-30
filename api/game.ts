@@ -1,7 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // The 'id' will be a query parameter, e.g., /api/game?id=452
   const { id } = req.query;
 
   if (!id) {
@@ -12,9 +11,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const apiResponse = await fetch(targetUrl, {
-      headers: {
-        'User-Agent': 'Vercel-Proxy/1.0'
-      }
+      headers: { 'User-Agent': 'Vercel-Proxy/1.0' }
     });
 
     if (!apiResponse.ok) {
@@ -22,10 +19,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const data = await apiResponse.json();
-
-    // Cache game details for a longer period (1 day)
     res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate=604800');
-
     return res.status(200).json(data);
 
   } catch (error) {
