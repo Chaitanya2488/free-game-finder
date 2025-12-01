@@ -8,7 +8,7 @@ import { Game, GameDetails, GameQueryOptions } from '../models/game.model';
 })
 export class GameService {
   // Directly call the FreeToGame API instead of /api proxy
-  private readonly apiUrl = 'https://www.freetogame.com/api';
+  private readonly apiUrl = '/api';
   private http = inject(HttpClient);
 
   /**
