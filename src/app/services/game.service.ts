@@ -3,12 +3,15 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Game, GameDetails, GameQueryOptions } from '../models/game.model';
 
+import { environment } from '../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
   // Directly call the FreeToGame API instead of /api proxy
-  private readonly apiUrl = '/api';
+  //private readonly apiUrl = '/api';
+  private readonly apiUrl = environment.apiBase;
   private http = inject(HttpClient);
 
   /**

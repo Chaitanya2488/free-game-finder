@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://www.freetogame.com",
+    "target": "https://lingering-glitter-5cdc.chaitanyasiripurapu2003.workers.dev",
     "secure": false,
     "changeOrigin": true
   }
