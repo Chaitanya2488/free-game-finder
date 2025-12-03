@@ -11,7 +11,9 @@ import { environment } from '../../environments/environment';
 export class GameService {
   // Directly call the FreeToGame API instead of /api proxy
   //private readonly apiUrl = '/api';
-  private readonly apiUrl = environment.apiBase;
+  private readonly apiUrl = environment.production
+  ? 'https://lingering-glitter-5cdc.chaitanyasiripurapu2003.workers.dev/api'
+  : environment.apiBase;
   private http = inject(HttpClient);
 
   /**
