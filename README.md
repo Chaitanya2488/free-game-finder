@@ -126,5 +126,10 @@ src/
 
 🔸 Proxy Layer: Cloudflare Worker handles API requests and CORS
 
-📄 License
+## 📄 License
 MIT © Chaitanya Siripurapu
+
+## 🙌 Author
+
+Chaitanya Siripurapu
+GitHub: https://github.com/Chaitanya2488
