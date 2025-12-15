@@ -32,7 +32,7 @@ Deployed on **Firebase Hosting**, with optional support for **Vercel** or **Netl
 
 > 📌 Upload `architecture.png` to your repo root and it will render below:
 
-![Architecture Diagram](./architecture.png)
+![Architecture Diagram](./architecture.jpg)
 
 ---
 
