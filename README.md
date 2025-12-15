@@ -111,3 +111,5 @@ Code
 ---
 
 This is ready to paste into your repo. Do you want me to also add **badges** (Angular version, Cloudflare Worker, Vercel/Netlify deploy, MIT license) at the top so it looks more professional?
+
+![alt text](Copilot_20251215_122647.png)
