@@ -30,7 +30,7 @@ Deployed on **Firebase Hosting**, with optional support for **Vercel** or **Netl
 
 ## 🧩 Architecture Overview
 
-> 📌 Upload `architecture.png` to your repo root and it will render below:
+<!-- > 📌 Upload `architecture.png` to your repo root and it will render below: -->
 
 ![Architecture Diagram](./architecture.jpg)
 
@@ -38,7 +38,7 @@ Deployed on **Firebase Hosting**, with optional support for **Vercel** or **Netl
 
 ## 🖼️ UI Preview
 
-> 📌 Upload `ui-preview.png` to your repo root and it will render below:
+<!-- > 📌 Upload `ui-preview.png` to your repo root and it will render below: -->
 
 ![UI Preview](./ui-preview.png)
 
@@ -49,4 +49,82 @@ Deployed on **Firebase Hosting**, with optional support for **Vercel** or **Netl
 ### 1. Clone the repo
 ```bash
 git clone https://github.com/Chaitanya2488/free-game-finder.git
-cd free-game-finder
+cd free-game-finder 
+```
+### 2. Install dependencies
+```bash
+npm install
+```
+### 3. Run locally
+```bash
+ng serve
+```
+### 4. Deploy Worker
+Use Cloudflare Wrangler to deploy your proxy:
+
+```bash
+wrangler deploy
+```
+## 🌐 Cloudflare Worker Proxy Code
+``` javascript
+export default {
+  async fetch(request) {
+    const url = new URL(request.url);
+
+    const corsHeaders = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Headers": "*",
+      "Access-Control-Max-Age": "86400",
+      "Content-Type": "application/json"
+    };
+
+    if (request.method === "OPTIONS") {
+      return new Response(null, { status: 204, headers: corsHeaders });
+    }
+
+    let targetUrl = null;
+
+    if (url.pathname === "/api/games") {
+      targetUrl = "https://www.freetogame.com/api/games";
+    }
+
+    if (url.pathname === "/api/game") {
+      const id = url.searchParams.get("id");
+      targetUrl = `https://www.freetogame.com/api/game?id=${id}`;
+    }
+
+    if (targetUrl) {
+      const response = await fetch(targetUrl);
+      const data = await response.json();
+      return new Response(JSON.stringify(data), {
+        status: response.status,
+        statusText: response.statusText,
+        headers: corsHeaders
+      });
+    }
+
+    return new Response("NOT FOUND", { status: 404, headers: corsHeaders });
+  }
+}
+```
+## 📁 Folder Structure
+``` Code
+src/
+├── app/
+│   ├── components/      # UI components
+│   ├── services/        # GameService and other services
+│   └── routing/         # Angular routing modules
+├── assets/              # Static assets
+├── environments/        # Environment configs
+└── index.html           # Entry point
+```
+## 🚀 Deployment Options
+✅ Live App: free-game-finder-app.web.app
+
+🟡 Alternative Hosting: Vercel or Netlify
+
+🔸 Proxy Layer: Cloudflare Worker handles API requests and CORS
+
+📄 License
+MIT © Chaitanya Siripurapu
