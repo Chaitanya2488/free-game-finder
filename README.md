@@ -1,59 +1,113 @@
-# FreeGameFinder
+# 🎮 Free Game Finder
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
+An Angular frontend application that displays free-to-play games using data from the [FreeToGame API](https://www.freetogame.com/).  
+Requests are proxied through a **Cloudflare Worker** to bypass CORS restrictions, ensuring smooth integration with modern browsers.  
+The app is deployable on **Vercel** or **Netlify**.
 
-## Development server
+---
 
-To start a local development server, run:
+## ✨ Features
 
-```bash
+- Angular frontend with routing, services, and reusable components
+- GameService fetches game list and details via a Worker proxy
+- Cloudflare Worker handles:
+  - `/api/games` → list of games
+  - `/api/game?id=123` → details for a specific game
+- Worker adds CORS headers to support browser requests
+- Responsive UI with genre filtering, sorting, and search
+- Easy deployment on Vercel or Netlify
+
+---
+
+## 🧩 Architecture Overview
+
+```plaintext
+Angular Frontend → Cloudflare Worker → FreeToGame API
+       ↑                 ↓
+   Client Request   Adds CORS headers
+       ↓                 ↑
+   Rendered UI     JSON Response
+⚙️ Setup Instructions
+1. Clone the repo
+bash
+git clone https://github.com/your-username/free-game-finder.git
+cd free-game-finder
+2. Install dependencies
+bash
+npm install
+3. Run locally
+bash
 ng serve
-```
+4. Deploy Worker
+Use Cloudflare Wrangler to deploy your proxy:
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+bash
+wrangler deploy
+🌐 Cloudflare Worker Proxy Code
+javascript
+export default {
+  async fetch(request) {
+    const url = new URL(request.url);
 
-## Code scaffolding
+    const corsHeaders = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Headers": "*",
+      "Access-Control-Max-Age": "86400",
+      "Content-Type": "application/json"
+    };
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+    // Handle preflight OPTIONS request
+    if (request.method === "OPTIONS") {
+      return new Response(null, { status: 204, headers: corsHeaders });
+    }
 
-```bash
-ng generate component component-name
-```
+    let targetUrl = null;
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+    // /api/games
+    if (url.pathname === "/api/games") {
+      targetUrl = "https://www.freetogame.com/api/games";
+    }
 
-```bash
-ng generate --help
-```
+    // /api/game?id=123
+    if (url.pathname === "/api/game") {
+      const id = url.searchParams.get("id");
+      targetUrl = `https://www.freetogame.com/api/game?id=${id}`;
+    }
 
-## Building
+    if (targetUrl) {
+      const response = await fetch(targetUrl);
+      const data = await response.json();
+      return new Response(JSON.stringify(data), {
+        status: response.status,
+        statusText: response.statusText,
+        headers: corsHeaders
+      });
+    }
 
-To build the project run:
+    return new Response("NOT FOUND", { status: 404, headers: corsHeaders });
+  }
+}
+📁 Folder Structure
+Code
+src/
+├── app/
+│   ├── components/      # UI components
+│   ├── services/        # GameService and other services
+│   └── routing/         # Angular routing modules
+├── assets/              # Static assets
+├── environments/        # Environment configs
+└── index.html           # Entry point
+🚀 Live Demo
+Vercel: your-vercel-url.vercel.app
 
-```bash
-ng build
-```
+Netlify: your-netlify-url.netlify.app
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+📄 License
+MIT © Your Name
 
-## Running unit tests
+Code
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+---
 
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This is ready to paste into your repo. Do you want me to also add **badges** (Angular version, Cloudflare Worker, Vercel/Netlify deploy, MIT license) at the top so it looks more professional?
